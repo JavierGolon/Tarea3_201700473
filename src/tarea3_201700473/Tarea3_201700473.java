@@ -8,7 +8,7 @@ import java.util.Scanner;
  * @author JAVI
  */
 public class Tarea3_201700473 {
-
+// metodo para llamar desde cualquier punto al menu principal
         public static void menuPrincipal(){
             System.out.println("    MENU PRINCIPAL");
              System.out.println("1 - Usuarios\n"
@@ -26,20 +26,27 @@ public class Tarea3_201700473 {
         }
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
-        int MENU,MENUUSUARIO,MENUDIGITS,MENUORDEN,opcion5;
+        int MENU,MENUUSUARIO,MENUDIGITS,MENUORDEN;
         int numero;
-        //estas varibles son para el uso del meno de ordenamiento
+        //VARIABLES MENU ORDENAMIENTO
         int numero1=0;
         int numero2=0;
         int numero3=0;
         int i;
-        
         Boolean comprobacion;
         //-----------------------------------
-        // variables para el menu usuario
-       String usuario1,usuario2,usuario3,usuario4,usuario5;
-        String[]nombreusuarios=new String[6];
+        // VARIABLES MENU USUARIOS
+        String[]nombreusuarios=new String[5];
         //--------------------------------
+        //VARIABLES MENU PROMEDIO
+        int[][]promedio=new int[6][6];
+        int numeroalumno=0;
+        int columna=0;
+        int fila=0;
+        int nota1;
+        int totalnota=0;
+        int promedioalumno;
+        //VARIBLES CONTAR DIGITOS
         int contadordigitos=0;
         
         
@@ -51,12 +58,13 @@ public class Tarea3_201700473 {
          MENU=teclado.nextInt();
         
          switch(MENU){
-            //OPCION USUARIOS
+            //---------------------------------------------------------------- 
+            //CALCULO USUARIOS
             case 1:
                 int usuarioback=0;
                 do{
                 System.out.println("    MENU DE USUARIOS");
-        System.out.println("1 - 1ngresar Usuarios\n"
+        System.out.println("1 - Ingresar Usuarios\n"
                 + "2 - Mostar Usuarios Ascendentemente\n"
                 + "3 - Mostar Usuarios Descendentemente\n"
                 + "4 - Menu Principal");
@@ -65,38 +73,46 @@ public class Tarea3_201700473 {
             case 1:
                 
                 System.out.println("Ingrese 5 el nombres de usuario");
-                
-                for(i=0;i<nombreusuarios.length;i++){
-                    
-                    usuario1=teclado.nextLine();
-                    nombreusuarios[i]=usuario1;
-                }
-                    usuarioback=1;
+                      // NO LOGRE QUE ME INGRESARA 5 USUARIOS A PESAR DE SER UN ARREGLO DE TAMAÑO 5
+                        for(i=0;i<nombreusuarios.length;i++){
+                        nombreusuarios[i]=teclado.nextLine(); 
+                          for(int h=0;h<i;h++){
+                            if(i>=1&&nombreusuarios[i].equals(nombreusuarios[h])){
+                             System.out.println("USUARIO EXISTENTE INGRESO OTRO");
+                             nombreusuarios[i]=teclado.nextLine();
+                            }
+                          }
+                            
+                        }
+                    usuarioback=1; // VUELVO AL MENU DE USUARIO
+                //ORDEN ASCENDENTE
                 break;
             case 2:
-                for(i=5;i>=0;i--){
+                for(i=4;i>=0;i--){
                     System.out.println(nombreusuarios[i]);
                 }
                  usuarioback=1;
                 break;
+                //ORDEN DESCENDENTE
             case 3:
-                for(i=0;i<=5;i++){
+                for(i=0;i<=4;i++){
                     System.out.println(nombreusuarios[i]);
                 }
                 usuarioback=1;
                  
                 break;
             case 4:
+                usuarioback=0;
                 MENU=1; //VOLVER AL MENU PRINCIPAL
                 break;
                 }  
                 }while(usuarioback==1);
         break;
                 
-            
-// MENU PARA CONTAR DIGITOS    
+            //-----------------------------------------------------------
+            // CALCULO PARA CONTAR DIGITOS    
             case 2:
-                int digitosback=0;
+                int digitosback=0; // VUELVO AL MENU DE DIGITOS
                do{
               
                 System.out.println("    MENU DEL CONTADOR DE DIGITOS");
@@ -144,11 +160,11 @@ public class Tarea3_201700473 {
                 }
                }while(digitosback==1);
               break;
-                
-            //OPCION TRES NUMEROS MAYOR A MENOR    
+            //-------------------------------------------------------------    
+            //CALCULO TRES NUMEROS MAYOR A MENOR    
                 
             case 3:
-                int ordenback=0;
+                int ordenback=0;// VUELVO AL MENU DE ORDEN
                 do{
                 
                 System.out.println("   MENU TRES NUMEROS");
@@ -217,8 +233,8 @@ public class Tarea3_201700473 {
                              ordenback=1;
                          }
                          }
-                               ordenback=1;
-                               System.out.println("DEBE DE INGRESAR LOS NUMEROS!!!!!");
+                             ordenback=1;
+                             System.out.println("DEBE DE INGRESAR LOS NUMEROS!!!!!");
                       break;
                          
                      case 3:
@@ -228,16 +244,45 @@ public class Tarea3_201700473 {
                  }
                 }while(ordenback==1);
                 break;
-                
+                //------------------------------------------------------
+                //CODIGO PROMEDIO ESTUDIANTES
             case 4:
-                //CALCULO DEL PROMEDIO
+                int promedioback=0; // VUELVO AL MENU DE PROMEDIO
+                
+                do{
+                  for(fila=0;fila<=5;fila++){
+                  totalnota=0;
+                  promedioalumno=0;
+                  nota1=0;
+                  numeroalumno=numeroalumno+1;
+                  promedio[fila][0]=numeroalumno;
+                  System.out.println("Ingrese 4 notas del estudiantes No. "+numeroalumno);
+                      for(columna=1;columna<5;columna++){
+                     promedio[fila][columna]=teclado.nextInt();
+                     nota1=promedio[fila][columna];
+                     totalnota=totalnota+nota1;
+                     promedioalumno=(totalnota/4);
+                     promedio[fila][5]=promedioalumno;
+                      } 
+                  }
+                  
+                  for(fila=0;fila<=5;fila++){    
+                     System.out.println("");
+                     for(columna=0;columna<=5;columna++){
+                     System.out.print(promedio[fila][columna]+"  ");
+                     
+                     
+                      }
+                  }
+                  
+                }while(promedioback==1);
                 break;
                 
                 
     }
         
         
-    }while(MENU==1);    
+    }while(MENU==1);   /// ME REPITE TODO EL PROCESO 
     }
     
 }
